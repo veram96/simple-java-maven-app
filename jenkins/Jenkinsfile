@@ -1,16 +1,22 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.8.6'
-        }
-    }
+    agent any
     stages {
         stage('Build') {
+            agent {
+                docker {
+                    image 'maven:3.8.6'
+                }
+            }
             steps {
                 sh 'mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
+            agent {
+                docker {
+                    image 'maven:3.8.6'
+                }
+            }
             steps {
                 sh 'mvn test'
             }
@@ -21,6 +27,11 @@ pipeline {
             }
         }
         stage('Deliver') {
+            agent {
+                docker {
+                    image 'maven:3.8.6'
+                }
+            }
             steps {
                 sh './jenkins/scripts/deliver.sh'
             }
