@@ -26,14 +26,14 @@ pipeline {
                 }
             }
         }
-        stage('Deliver') {
-            agent {
-                docker {
-                    image 'maven:3.8.6'
-                }
-            }
+        stage('Build Image'){
             steps {
-                sh './jenkins/scripts/deliver.sh'
+                script{
+                    docker.withRegistry('us-central1-docker.pkg.dev/crp-dev-cloudsrv-test/jenkins-course/java', '') {
+                        def customImage = docker.build("my-image:${env.BUILD_ID}")
+                        /* Push the container to the custom Registry */
+                        customImage.push()
+                    }
             }
         }
     }
