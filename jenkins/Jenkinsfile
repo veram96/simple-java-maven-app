@@ -29,7 +29,7 @@ pipeline {
         stage('Build Image'){
             steps {
                 script{
-                    docker.withRegistry('us-central1-docker.pkg.dev/crp-dev-cloudsrv-test/jenkins-course/java', '') {
+                    docker.withRegistry('https://us-central1-docker.pkg.dev/crp-dev-cloudsrv-test/jenkins-course/java', '') {
                         def customImage = docker.build("my-image:${env.BUILD_ID}")
                         /* Push the container to the custom Registry */
                         customImage.push()
